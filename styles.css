@@ -517,26 +517,18 @@ dialog::backdrop {
   .workspace,
   .viewer,
   .panel-title,
+  .preview-dialog,
   dialog::backdrop {
     display: none !important;
   }
 
   .app-shell,
-  .preview-pane,
-  .preview-dialog,
-  .preview-dialog form {
+  .preview-pane {
     display: block;
     padding: 0;
     border: 0;
     box-shadow: none;
     background: white;
-  }
-
-  .preview-dialog[open] {
-    position: static;
-    width: auto;
-    max-height: none;
-    overflow: visible;
   }
 
   .sheet {
