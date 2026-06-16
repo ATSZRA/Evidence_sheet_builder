@@ -1,0 +1,11 @@
+*.zip
+*.pdf
+*.xlsx
+*.xls
+*.docx
+*.tmp
+Thumbs.db
+.DS_Store
+dist/
+outputs/
+node_modules/

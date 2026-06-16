@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>証拠説明書ビルダー</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">標準書式ビルダー</p>
+        <h1>証拠説明書ビルダー</h1>
+      </div>
+      <div class="header-actions">
+        <button id="preview-button" class="primary">プレビュー</button>
+        <button id="print-sheet">証拠説明書を印刷/PDF保存</button>
+        <button id="export-json">データを書き出し</button>
+        <label class="file-button">
+          データを読み込み
+          <input id="import-json" type="file" accept="application/json" />
+        </label>
+        <button id="clear-focus" hidden>全体表示に戻る</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="workspace panel" data-panel="workspace" aria-label="作業スペース">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">Workspace</p>
+            <h2>左側の入力欄</h2>
+          </div>
+          <div class="panel-actions">
+            <button data-focus="workspace">拡大</button>
+            <button id="add-row">証拠を追加</button>
+          </div>
+        </div>
+
+        <details class="case-meta">
+          <summary>事件情報（必要なときだけ入力）</summary>
+          <div class="meta-grid">
+            <label>事件名<input id="case-name" type="text" placeholder="空欄可" /></label>
+            <label>原告<input id="plaintiff" type="text" placeholder="空欄可" /></label>
+            <label>被告<input id="defendant" type="text" placeholder="空欄可" /></label>
+            <label>裁判所名<input id="court" type="text" placeholder="空欄可" /></label>
+            <label>提出日<input id="submit-date" type="text" /></label>
+            <label>代理人表示<input id="attorney" type="text" /></label>
+          </div>
+        </details>
+
+        <div class="number-tools">
+          <label>証拠種別
+            <select id="evidence-prefix">
+              <option value="甲">甲</option>
+              <option value="乙">乙</option>
+              <option value="弁">弁</option>
+            </select>
+          </label>
+          <label>開始番号
+            <input id="start-number" type="number" min="1" value="1" />
+          </label>
+          <button id="renumber">番号を振り直す</button>
+        </div>
+
+        <div id="evidence-list" class="evidence-list"></div>
+      </section>
+
+      <section class="viewer panel" data-panel="viewer" aria-label="PDFビューア">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">Frame on Frame</p>
+            <h2>PDF確認フレーム</h2>
+          </div>
+          <div class="panel-actions">
+            <button data-focus="viewer">拡大</button>
+            <button data-focus="work-evidence">入力＋証拠</button>
+            <button id="pdf-popout">単体表示</button>
+            <label class="file-button">
+              PDFを開く
+              <input id="pdf-input" type="file" accept="application/pdf" />
+            </label>
+          </div>
+        </div>
+
+        <div class="pdf-tools">
+          <button id="rotate-left">左回転</button>
+          <button id="rotate-right">右回転</button>
+          <button id="rotate-reset">回転リセット</button>
+          <span id="rotation-label">0°</span>
+        </div>
+
+        <div id="drop-zone" class="drop-zone">
+          <p>PDFをここにドロップ、または「PDFを開く」から選択</p>
+          <small>選択したPDFはブラウザ内だけで表示されます。複製は作りません。</small>
+        </div>
+
+        <div class="pdf-frame" id="pdf-frame">
+          <div class="pdf-rotator" id="pdf-rotator">
+            <iframe id="pdf-viewer" title="PDF viewer"></iframe>
+          </div>
+          <div id="stamp-overlay" class="stamp-overlay">甲1</div>
+        </div>
+      </section>
+
+      <aside class="preview-pane panel" data-panel="preview" aria-label="証拠説明書プレビュー">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">Preview</p>
+            <h2>標準書式プレビュー</h2>
+          </div>
+          <div class="panel-actions">
+            <button data-focus="preview">拡大</button>
+          </div>
+        </div>
+        <article id="sheet-preview" class="sheet"></article>
+      </aside>
+    </main>
+
+    <dialog id="preview-dialog" class="preview-dialog">
+      <form method="dialog">
+        <div class="dialog-title">
+          <h2>証拠説明書プレビュー</h2>
+          <div class="dialog-actions">
+            <button id="print-from-preview" type="button">印刷/PDF保存</button>
+            <button>閉じる</button>
+          </div>
+        </div>
+        <article id="sheet-preview-modal" class="sheet sheet-modal"></article>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
