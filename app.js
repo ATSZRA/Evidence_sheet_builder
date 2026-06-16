@@ -342,6 +342,7 @@ els.printFromPreview.addEventListener("click", () => {
   syncRowsFromInputs();
   renderPreview();
   saveState();
+  els.previewDialog.close();
   window.print();
 });
 
